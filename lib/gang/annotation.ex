@@ -122,8 +122,9 @@ defmodule Gang.Annotation do
         :ok -> super(unquote_splicing(args))
         # TODO now just accept functions with exactly 2 input param.
         # make dynamic param count.
-        {:ok, {param0, param1} = _new_args} -> super(param0, param1)
-        error -> error
+        {:ok, [param0, param1] = _new_args} -> super(param0, param1)
+        {:error, reason} -> reason
+        e -> e
       end
     end
   end

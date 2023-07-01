@@ -24,7 +24,7 @@ defmodule Gang.Annotation do
 
     unless gang_opts == :no_gang do
 
-      gang_module  = Keyword.get(gang_opts, :mod) || Module.get_attribute(env.module, :gang_default_mod) |> IO.inspect(label: "DDDDDDDDD") || raise ArgumentError, "shoude set default module with gang_module/1 macro or in @gang :mod"
+      gang_module  = Keyword.get(gang_opts, :mod) || Module.get_attribute(env.module, :gang_default_mod) || raise ArgumentError, "shoude set default module with gang_module/1 macro or in @gang :mod"
       gang_opts = Keyword.put(gang_opts, :mod, gang_module)
 
       Module.put_attribute(env.module, :gang_funs, %{

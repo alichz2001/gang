@@ -18,7 +18,6 @@ defmodule Gang.Annotation do
     end
   end
 
-
   def on_definition(env, kind, name, args, guards, _body) do
     gang_opts = Module.get_attribute(env.module, :gang) || :no_gang
 
@@ -111,7 +110,6 @@ defmodule Gang.Annotation do
         {:\\, _, [arg_name | _]} -> arg_name
         arg -> arg
       end)
-
 
     gang_mod = Keyword.get(gang_opts, :mod) || raise ArgumentError, ":mod does not set"
     gang_type = Keyword.get(gang_opts, :type) || raise ArgumentError, ":type does not set"

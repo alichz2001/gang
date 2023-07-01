@@ -13,7 +13,7 @@ defmodule Gang.Annotation do
 
   defmacro gang_module(opts) do
     quote location: :keep do
-      Module.register_attribute(__MODULE__, :gang_default_mod, accumulate: false ,persist: false)
+      Module.register_attribute(__MODULE__, :gang_default_mod, accumulate: false , persist: false)
       Module.put_attribute(__MODULE__, :gang_default_mod, unquote(opts))
     end
   end

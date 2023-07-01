@@ -2,7 +2,7 @@ defmodule Gang.Annotation do
 
   defmacro __using__(_opts) do
     quote do
-      require Logger
+      import Gang.Annotation
 
       Module.register_attribute(__MODULE__, :gang_funs, accumulate: true, persist: false)
 
@@ -11,10 +11,22 @@ defmodule Gang.Annotation do
     end
   end
 
+  defmacro gang_module(opts) do
+    quote location: :keep do
+      Module.register_attribute(__MODULE__, :gang_default_mod, accumulate: false ,persist: false)
+      Module.put_attribute(__MODULE__, :gang_default_mod, unquote(opts))
+    end
+  end
+
+
   def on_definition(env, kind, name, args, guards, _body) do
     gang_opts = Module.get_attribute(env.module, :gang) || :no_gang
 
     unless gang_opts == :no_gang do
+
+      gang_module  = Keyword.get(gang_opts, :mod) || Module.get_attribute(env.module, :gang_default_mod) |> IO.inspect(label: "DDDDDDDDD") || raise ArgumentError, "shoude set default module with gang_module/1 macro or in @gang :mod"
+      gang_opts = Keyword.put(gang_opts, :mod, gang_module)
+
       Module.put_attribute(env.module, :gang_funs, %{
         kind: kind,
         name: name,
@@ -44,7 +56,6 @@ defmodule Gang.Annotation do
 
     functions =
       Enum.map(gang_funs, fn fun ->
-        IO.inspect(fun, label: "FUN")
         body = gen_body(fun)
         gen_function(fun, body)
       end)
@@ -94,7 +105,7 @@ defmodule Gang.Annotation do
     end
   end
 
-  defp gen_body(%{args: args, gang_opts: gang_opts} = fun) do
+  defp gen_body(%{args: args, gang_opts: gang_opts} = _fun) do
     args =
       Enum.map(args, fn
         {:\\, _, [arg_name | _]} -> arg_name

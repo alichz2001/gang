@@ -1,11 +1,10 @@
 # Gang
 
-**TODO: Add description**
+A package developed in Elixir for code organization and preventing code repetition in specific development scenarios.
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `gang` to your list of dependencies in `mix.exs`:
+Add `gang` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
@@ -15,7 +14,8 @@ def deps do
 end
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/gang>.
+## Documentation
+
+Check out the [API reference](https://hexdocs.pm/gang) for the latest documentation.
+
 
